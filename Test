@@ -1,0 +1,27 @@
+-- Place this LocalScript in StarterPlayerScripts or StarterCharacterScripts
+
+-- Function to toggle visibility using transparency
+local function toggleInvisibility(object)
+	if object:IsA("BasePart") then
+		object.Transparency = 1 - object.Transparency  -- Toggle transparency (0 or 1)
+	elseif object:IsA("Model") and object:FindFirstChildOfClass("Humanoid") then
+		for _, part in ipairs(object:GetDescendants()) do
+			if part:IsA("BasePart") then
+				part.Transparency = 1 - part.Transparency
+			end
+		end
+	end
+end
+
+-- Detect when the player clicks
+local function onClick()
+	local mouse = game.Players.LocalPlayer:GetMouse()
+	local clickObject = mouse.Target
+
+	if clickObject then
+		toggleInvisibility(clickObject)
+	end
+end
+
+-- Connect the onClick function to the mouse click event
+game.Players.LocalPlayer:GetMouse().Button1Down:Connect(onClick)
